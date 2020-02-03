@@ -1,0 +1,56 @@
+<mvc:View xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:smart="sap.ui.comp.smartfield"
+	xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" controllerName="sapmlservices.controller.View1"
+	class="viewPadding">
+	<App>
+		<pages>
+			<Page id="mainPageId" titleLevel="Auto" title="Product Image Classification App">
+				<content>
+					<VBox class="sapUiSmallMargin">
+						<VBox>
+							<Text
+								text="Bu uygulama SAP ML Image Classification servisini kullanarak aşağıdaki dosya yükleme alanından yüklenen görselin ürün sınıfını tahmin ediyor."></Text>
+							<Text text="Tahmin sonuçlarına göre en yüksek ihtimalle doğru olan sınıf ile ilgili amazon.com.tr'de arama yapıyor."></Text>
+							<Link text="Servis dokümantasyonu için tıklayın." target="_blank" href="https://api.sap.com/api/product_image_classification_api/resource"></Link>
+						</VBox>
+						<f:SimpleForm id="newEntitySimpleForm" minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" labelSpanL="3"
+							labelSpanM="3" emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1" class="editableForm">
+							<f:content>
+								<Label id="fileNameId" text="Resim yükleme"/>
+								<u:FileUploader id="fileUploader" buttonText="Seç ve Yükle" name="FILENAME" placeholder="Buraya yüklüyoruz" tooltip="Dosya seçiniz" change="processFile" sameFilenameAllowed="false"
+									liveChange="onSelectInput" width="350px"/>
+							</f:content>
+						</f:SimpleForm>
+					</VBox>
+					<FlexBox width="70%" id="__box2" justifyContent="Center">
+						<items>
+							<Button visible="true" text="Ürün sınıfını tahmin et" enabled="true" press="uploadPress" width="200px"/>
+						</items>
+					</FlexBox>
+				</content>
+				<Table id="idProductsTable" noDataText="Veri yok. Ürün görseli yüklemeniz gerekiyor." inset="false" items="{ path: '/results', sorter: { path: 'score', descending: 'true' } }">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Ürün Grupları ve Olasılıklar" level="H2"/>
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+						<Column>
+							<Text text="Ürün Sınıfı"/>
+						</Column>
+						<Column>
+							<Text text="Olasılık Puanı"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<ObjectIdentifier title="{label}"/>
+								<Text text="{score}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
